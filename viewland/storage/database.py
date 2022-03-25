@@ -23,22 +23,25 @@ verbose=False
 
 Base = declarative_base()
 
-# the following taken from http://www.rfk.id.au/blog/entry/preparing-pyenchant-for-python-3/
-try:
-    unicode = unicode
-except NameError:
-    # 'unicode' is undefined, must be Python 3
-    str = str
-    unicode = str
-    bytes = bytes
-    basestring = (str,bytes)
-else:
-    # 'unicode' exists, must be Python 2
-    str = str
-    unicode = unicode
-    bytes = str
-    basestring = basestring
+# yw488
+# # the following taken from http://www.rfk.id.au/blog/entry/preparing-pyenchant-for-python-3/
+# try:
+#     unicode = unicode
+# except NameError:
+#     # 'unicode' is undefined, must be Python 3
+#     str = str
+#     unicode = str
+#     bytes = bytes
+#     basestring = (str,bytes)
+# else:
+#     # 'unicode' exists, must be Python 2
+#     str = str
+#     unicode = unicode
+#     bytes = str
+#     basestring = basestring
 
+# yw488
+basestring = str
 
 class Minimum(Base):
     """
@@ -119,6 +122,10 @@ class Minimum(Base):
         _id = self.id()
         assert _id is not None
         return _id
+    
+    # yw488
+    def __repr__(self):
+        return "<Minimum(id='{}', energy='{}'>".format(self._id, self.energy)
 
 #    transition_states = relationship("transition_states", order_by="transition_states.id", backref="minima")
     
