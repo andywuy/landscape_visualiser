@@ -52,7 +52,7 @@ class OptimDBConverter(object):
             # create the minimum object and attach the data
             # must add minima like this.  If you use db.addMinimum()
             # some minima with similar energy might be assumed to be duplicates
-            min_dict = dict(energy=e, coords=coords, invalid=False,
+            min_dict = dict(energy=e, coords=coords, invalid=0, #False,
                             fvib=fvib, pgorder=pg
                             )
             minima_dicts.append(min_dict)
@@ -87,7 +87,7 @@ class OptimDBConverter(object):
 
             # must add transition states like this.  If you use db.addtransitionState()
             # some transition states might be assumed to be duplicates
-            tsdict = dict(energy=e, coords=coords, invalid=False,
+            tsdict = dict(energy=e, coords=coords, invalid=0, #False,
                           fvib=fvib, pgorder=pg,
                           _minimum1_id=m1indx,
                           _minimum2_id=m2indx

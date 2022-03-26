@@ -1,7 +1,7 @@
 """Database for simulation data in a relational database
 """
 from __future__ import print_function
-import threading
+# import threading
 import os
 
 import numpy as np
@@ -9,12 +9,15 @@ import numpy as np
 from sqlalchemy import create_engine, and_, or_
 from sqlalchemy.orm import sessionmaker, undefer
 from sqlalchemy import Column, Integer, Float, PickleType, String
+
+# yw488
+from sqlalchemy import Boolean
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship, deferred
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.schema import Index
 
-from pele.utils.events import Signal
+# from pele.utils.events import Signal
 
 __all__ = ["Minimum", "TransitionState", "Database"]
 
@@ -251,6 +254,9 @@ class TransitionState(Base):
         """return the sql id of the object"""
         return self._id
 
+    # yw488
+    def __repr__(self):
+        return "<TransitionState(id='{}', energy='{}'>".format(self._id, self.energy)
 
 
 class SystemProperty(Base):
@@ -462,15 +468,17 @@ class Database(object):
         Session = sessionmaker(bind=self.engine)
         self.session = Session()
         
-        # these functions will be called when a minimum or transition state is 
-        # added or removed
-        self.on_minimum_added = Signal()
-        self.on_minimum_removed = Signal()
-        self.on_ts_added = Signal()
-        self.on_ts_removed = Signal()
+        # yw488
+        # print('remove!!!')
+        # # these functions will be called when a minimum or transition state is 
+        # # added or removed
+        # self.on_minimum_added = Signal()
+        # self.on_minimum_removed = Signal()
+        # self.on_ts_added = Signal()
+        # self.on_ts_removed = Signal()
         
-        self.lock = threading.Lock()
-        self.connection = self.engine.connect()
+        # self.lock = threading.Lock()
+        # self.connection = self.engine.connect()
 
     def _is_pele_database(self):
         conn = self.engine.connect()
