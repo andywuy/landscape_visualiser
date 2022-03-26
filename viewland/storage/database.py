@@ -3,7 +3,7 @@
 import numpy as np
 
 from sqlalchemy import create_engine, and_, or_
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import Session #sessionmaker
 from sqlalchemy import Column, Integer, Float, PickleType
 
 from sqlalchemy import ForeignKey
@@ -248,7 +248,7 @@ class Database(object):
     session = None
 
     def __init__(self,
-                 connect_string='postgresql+psycopg2://temp:12345678@localhost:5432/books',
+                 connect_string='postgresql+psycopg2://temp:12345678@localhost:5432/data',
                  createdb=True):
 
         self.engine = create_engine(connect_string)
@@ -256,8 +256,11 @@ class Database(object):
         Base.metadata.create_all(self.engine)
 
         # set up the session which will manage the frontend connection to the database
-        Session = sessionmaker(bind=self.engine)
-        self.session = Session()
+        self.session = Session(bind=self.engine)
+
+    def close(self):
+        self.session.commit()
+        self.session.close()
 
     def get_lowest_energy_minimum(self):
         """return the minimum with the lowest energy"""

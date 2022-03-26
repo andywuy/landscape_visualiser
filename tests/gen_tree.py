@@ -61,7 +61,9 @@ def main():
     mappable.set_array(color_range)
     fig.colorbar(mappable=mappable, shrink=0.3,
     ticks=[CMIN,0,CMAX],pad=0.01)
-    fig.savefig(OUT)    
+    fig.savefig(OUT)   
+    # Must close the database connection. 
+    db.close() 
 
 if __name__ == "__main__":
     config = configparser.ConfigParser()

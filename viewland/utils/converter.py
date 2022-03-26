@@ -49,6 +49,10 @@ class Converter(object):
 
             indx += 1
 
+        # with self.db.engine.connect() as connection:
+        #     with connection.begin():
+        #         connection.execute(Minimum.__table__.insert(), minima_dicts)
+            
         self.db.engine.execute(Minimum.__table__.insert(), minima_dicts)
         self.db.session.commit()
 
@@ -79,6 +83,9 @@ class Converter(object):
 
             indx += 1
 
+        # with self.db.engine.connect() as connection:
+        #     with connection.begin():
+        #         connection.execute(Minimum.__table__.insert(), ts_dicts)
         self.db.engine.execute(TransitionState.__table__.insert(), ts_dicts)
         self.db.session.commit()
 
