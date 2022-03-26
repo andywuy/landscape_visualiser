@@ -1,0 +1,26 @@
+services:
+  database:
+    image: postgres
+    container_name: postgres_container
+    ports:
+      - 5001:5432
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password 
+      - POSTGRES_DB=dbname
+
+  viewland:
+    image: viewland
+    container_name: viewland_container
+    build: .
+    # command: python crud.py
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password 
+      - POSTGRES_DB=dbname   
+      - POSTGRES_CONTAINER_NAME=postgres_container
+      - POSTGRES_PORT=5432
+    depends_on:
+      - database
+
+      
