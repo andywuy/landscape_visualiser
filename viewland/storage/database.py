@@ -3,13 +3,12 @@
 import numpy as np
 
 from sqlalchemy import create_engine, and_, or_
-from sqlalchemy.orm import sessionmaker, undefer
-from sqlalchemy import Column, Integer, Float, PickleType, String
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import Column, Integer, Float, PickleType
 
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship, deferred
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.schema import Index
 
 
 __all__ = ["Minimum", "TransitionState", "Database"]
@@ -26,19 +25,19 @@ class Minimum(Base):
     Parameters
     ----------
     energy : float
+        energy of the minimum.
     coords : numpy array
-        coordinates
+        coordinates of the minimum.
 
     Attributes
     ----------
     energy :
-        the energy of the minimum
+        the energy of the minimum.
     coords :
         the coordinates of the minimum.  This is stored as a pickled numpy
         array which SQL interprets as a BLOB.
     fvib :
-        the log product of the squared normal mode frequencies.  This is used in
-        the free energy calcualations
+        the log product of the squared normal mode frequencies.
     pgorder :
         point group order
     invalid :
@@ -49,11 +48,6 @@ class Minimum(Base):
         as a BLOB, so you can put anything here you want as long as it's serializable.
         Usually a dictionary works best.
 
-
-    Notes
-    -----
-    To avoid any double entries of minima and be able to compare them,
-    only use `Database.addMinimum()` to create a minimum object.
 
     See Also
     --------
@@ -98,26 +92,24 @@ class Minimum(Base):
         assert _id is not None
         return _id
 
-    # yw488
     def __repr__(self):
         return "<Minimum(id='{}', energy='{}'>".format(self._id, self.energy)
 
-#    transition_states = relationship("transition_states", order_by="transition_states.id", backref="minima")
-
 
 class TransitionState(Base):
-    """Transition state object
-
+    """
     The TransitionState class represents a saddle point in the database.
 
     Parameters
     ----------
     energy : float
+        energy of the transition state.
     coords : numpy array
+        coordinates of the transition state.
     min1 : Minimum object
-        first minimum
+        first minimum connected to the transition state.
     min2 : Minimum object
-        first minimum
+        second minimum connected to the transition state.
     eigenval : float, optional
         lowest (single negative) eigenvalue of the saddle point
     eigenvec : numpy array, optional
@@ -157,14 +149,6 @@ class TransitionState(Base):
         The eigenvalue corresponding to `eigenvec`.  A.k.a. the curvature
         along the direction given by `eigenvec`
 
-    Notes
-    -----
-    To avoid any double entries and be able to compare them, only use
-    Database.addTransitionState to create a TransitionStateobject.
-
-    programming note: The functions in the database require that
-    ts.minimum1._id < ts.minimum2._id.  This will be handled automatically
-    by the database, but we must remember not to screw it up
 
     See Also
     --------
@@ -226,26 +210,48 @@ class TransitionState(Base):
         """return the sql id of the object"""
         return self._id
 
-    # yw488
     def __repr__(self):
         return "<TransitionState(id='{}', energy='{}'>".format(self._id, self.energy)
 
 
 class Database(object):
+    """
+    Database storage class
+    The Database class uses SQLAlchemy to handle the connection to the database. 
+
+    Parameters
+    ----------
+    connect_string : string
+        connection string for sqlalchemy.create_engine .
+    createdb : boolean, optional
+        create database if not exists, default is true.
+
+    Attributes
+    ----------
+    engine : sqlalchemy database engine
+    session : sqlalchemy session
+
+    Examples
+    --------
+    >>> from viewland.storage import Database
+    >>> db = Database()
+    >>> # TODO: show how to add minima and TS to the database
+    >>> for minimum in database.minima():
+    >>>     print minimum.energy
+    
+    See Also
+    --------
+    Minimum
+    TransitionState
+    """
     engine = None
     session = None
-    connection = None
-    accuracy = 1e-3
-    compareMinima = None
 
-    def __init__(self, db="temp:12345678@localhost:5432/books", accuracy=1e-3,
-                 connect_string='postgresql+psycopg2://%s',
-                 compareMinima=None, createdb=True):
-        self.accuracy = accuracy
-        self.compareMinima = compareMinima
-        DATABASE_URI = 'postgresql+psycopg2://temp:12345678@localhost:5432/books'
+    def __init__(self,
+                 connect_string='postgresql+psycopg2://temp:12345678@localhost:5432/books',
+                 createdb=True):
 
-        self.engine = create_engine(DATABASE_URI)
+        self.engine = create_engine(connect_string)
         Base.metadata.drop_all(self.engine)
         Base.metadata.create_all(self.engine)
 
@@ -268,7 +274,7 @@ class Database(object):
         return self.session.query(TransitionState).get(id)
 
     def get_transition_state_between_minima(self, min1: Minimum, min2: Minimum):
-        """return the TransitionState between two minima
+        """return the TransitionState between two minima.
 
         Returns
         -------
@@ -308,12 +314,9 @@ class Database(object):
         order_energy : bool
             order the minima by energy
 
-        Notes
-        -----
-        Minimum.coords is deferred in database queries.  If you need to access
-        coords for multiple minima it is *much* faster to `undefer` before
-        executing the query by, e.g.
-        `session.query(Minimum).options(undefer("coords"))`
+        Returns
+        -------
+        min : Minimum
         """
         if order_energy:
             return self.session.query(Minimum).order_by(Minimum.energy).all()
@@ -322,6 +325,10 @@ class Database(object):
 
     def transition_states(self, order_energy=False):
         """return an iterator over all transition states in database
+
+        Returns
+        -------
+        ts : TransitionState
         """
         if order_energy:
             return self.session.query(TransitionState).order_by(TransitionState.energy).all()
@@ -329,25 +336,9 @@ class Database(object):
             return self.session.query(TransitionState).all()
 
     def number_of_minima(self):
-        """return the number of minima in the database
-
-        Notes
-        -----
-        This is much faster than len(database.minima()), but is is not instantaneous.  
-        It takes a longer time for larger databases.  The first call to number_of_minima() 
-        can be much faster than subsequent calls.  
-        """
+        """return the number of minima in the database"""
         return self.session.query(Minimum).count()
 
     def number_of_transition_states(self):
-        """return the number of transition states in the database
-
-        Notes
-        -----
-        see notes for number_of_minima()
-
-        See Also
-        --------
-        number_of_minima
-        """
+        """return the number of transition states in the database"""
         return self.session.query(TransitionState).count()

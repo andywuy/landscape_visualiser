@@ -4,7 +4,7 @@
 
 from viewland.utils.disconnectivity_graph import DisconnectivityGraph, database2graph
 from viewland.storage import Database
-from viewland.utils.optim_compatibility import OptimDBConverter
+from viewland.utils.converter import Converter
 import numpy as np
 from matplotlib import cm
 import os
@@ -25,7 +25,7 @@ def main():
     
     # Create the database
     db = Database()
-    converter = OptimDBConverter(db)
+    converter = Converter(db)
     # Read in data from min.data ts.data
     converter.convert_no_coords()
 
