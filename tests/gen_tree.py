@@ -24,7 +24,18 @@ def main():
         exit(1)
     
     # Create the database
-    db = Database()
+
+    def create_connect_string():
+        user=os.environ.get('POSTGRES_USER')
+        password=os.environ.get('POSTGRES_PASSWORD')
+        database_name=os.environ.get('POSTGRES_DB')
+        port=os.environ.get('POSTGRES_PORT')
+        container_name = os.environ.get('POSTGRES_CONTAINER_NAME')
+
+        return 'postgresql+psycopg2://{}:{}@{}:{}/{}'.format(user,
+        password, container_name,port, database_name)
+
+    db = Database(create_connect_string())
     converter = Converter(db)
     # Read in data from min.data ts.data
     converter.convert_no_coords()

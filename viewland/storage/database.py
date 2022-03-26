@@ -248,7 +248,7 @@ class Database(object):
     session = None
 
     def __init__(self,
-                 connect_string='postgresql+psycopg2://temp:12345678@localhost:5432/data',
+                 connect_string, #='postgresql+psycopg2://temp:12345678@localhost:5432/data',
                  createdb=True):
 
         self.engine = create_engine(connect_string)
