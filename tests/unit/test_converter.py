@@ -1,17 +1,11 @@
 from viewland.utils import Converter
 from viewland.storage import Database
+from viewland.storage.database import create_connect_string
 
-def create_connect_string():
-    import os
-    user=os.environ.get('POSTGRES_USER')
-    password=os.environ.get('POSTGRES_PASSWORD')
-    database_name=os.environ.get('POSTGRES_DB')
-    port=os.environ.get('POSTGRES_PORT')
-    container_name = os.environ.get('POSTGRES_CONTAINER_NAME')
-
-    string = 'postgresql+psycopg2://{}:{}@{}:{}/{}'.format(user,
-    password, container_name,port, database_name)
-
-    #print("The connection string is: ", string)
-    return string
-
+def test_converter():
+    db = Database(create_connect_string())
+    converter = Converter(db, mindata='tests/testdata/min.data',
+    tsdata='tests/testdata/ts.data')
+    converter.convert_no_coords()
+    assert db.number_of_minima() == 10 and db.number_of_transition_states() == 105
+    db.close()
