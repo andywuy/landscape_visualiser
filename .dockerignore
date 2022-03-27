@@ -92,3 +92,6 @@ venv/
 */*.swp
 */*/*.swp
 */*/*/*.swp
+
+# Custom folders
+data/

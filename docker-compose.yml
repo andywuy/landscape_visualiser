@@ -14,6 +14,8 @@ services:
     container_name: viewland_container
     build: .
     # command: python crud.py
+    volumes:
+      - ./data:/user_data
     environment:
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=password 
