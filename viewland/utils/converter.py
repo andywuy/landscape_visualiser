@@ -1,6 +1,8 @@
 import numpy as np
 from viewland.storage import Minimum, TransitionState, Database
 
+__all__ = ['Converter']
+
 class Converter(object):
     """
     converts PATHSAMPLE files about minima and transition states into the database

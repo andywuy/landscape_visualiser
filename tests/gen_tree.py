@@ -2,9 +2,9 @@
 # The script produces the disconnectivity graph.
 # tinfo, min.data and ts.data must be present in the current directory.
 
-from viewland.utils.disconnectivity_graph import DisconnectivityGraph, database2graph
+from viewland.utils import DisconnectivityGraph, database2graph, Converter
 from viewland.storage import Database
-from viewland.utils.converter import Converter
+
 import numpy as np
 from matplotlib import cm
 import os

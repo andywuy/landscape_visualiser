@@ -13,8 +13,6 @@ from sqlalchemy.ext.declarative import declarative_base
 
 __all__ = ["Minimum", "TransitionState", "Database"]
 
-verbose = False
-
 Base = declarative_base()
 
 
