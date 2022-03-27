@@ -1,7 +1,3 @@
-# Run the file in result_i_clusters_j_outliers folder.
-# The script produces the disconnectivity graph.
-# tinfo, min.data and ts.data must be present in the current directory.
-
 from viewland.utils import DisconnectivityGraph, database2graph, Converter
 from viewland.storage import Database
 from viewland.storage.database import create_connect_string
@@ -16,19 +12,41 @@ plt.rcParams["font.family"] = "Times New Roman"
 plt.rcParams['font.size'] = 24
 plt.rcParams["figure.autolayout"] = True
 
-def main():
-    try:
-        if not (os.path.isfile('min.data') and os.path.isfile('ts.data')):
-            raise IOError('min.data and ts.data are missing!')
-    except IOError as err:
-        print(err)
-        exit(1)
-    
+def test_gen_tree():
+    path_tinfo = 'tests/testdata/tinfo'
+    path_min_data = 'tests/testdata/min.data'
+    path_ts_data = 'tests/testdata/ts.data'
+
     # Create the database
-    db = Database(create_connect_string())
-    converter = Converter(db)
+    string = create_connect_string()
+    print('connection string to the database is: ', string)
+    db = Database(string)
+    converter = Converter(db, mindata=path_min_data, tsdata=path_ts_data)
+    
     # Read in data from min.data ts.data
     converter.convert_no_coords()
+
+    config = configparser.ConfigParser()
+    config.read(path_tinfo)
+    # Minimum value of the colorbar.
+    CMIN = float(config['settings']['CMIN'])
+    # Maximum value of the colorbar.
+    CMAX = float(config['settings']['CMAX'])
+    # Path to the color values
+    PATH_COLOR = config['settings']['PATH_COLOR']
+    PATH_COLOR = os.path.join('tests/testdata/',PATH_COLOR)
+    # Maximum energy level
+    EMAX = float(config['settings']['EMAX'])
+    # Minimum energy level
+    EMIN = float(config['settings']['EMIN'])
+    # Step size for basin analysis
+    STEP = float(config['settings']['STEP'])
+    # Colormap name
+    CMAP = config['settings']['CMAP']
+    # Output file name
+    OUT = config['settings']['OUT']
+
+    
 
     # Define the colorbar range.
     # color_range will be normalised to [0,1] by cm.ScalarMappable
@@ -36,6 +54,7 @@ def main():
 
     # Read in color values of the minima
     values = np.genfromtxt(PATH_COLOR)
+
     # Transform the values
     values = values / (CMAX-CMIN) - (CMIN/(CMAX-CMIN) - 0)
 
@@ -63,33 +82,6 @@ def main():
     fig.colorbar(mappable=mappable, shrink=0.3,
     ticks=[CMIN,0,CMAX],pad=0.01)
     fig.savefig(OUT)   
-    print(dg.graph.number_of_nodes(), graph.number_of_edges())
+    assert dg.graph.number_of_nodes() == 10
     # Must close the database connection. 
     db.close() 
-
-if __name__ == "__main__":
-    config = configparser.ConfigParser()
-    try:
-        if not os.path.exists("tinfo"):
-            raise IOError("The configuration file tinfo is missing!")
-    except IOError as err:
-        print(err)
-        sys.exit(1)
-    config.read("tinfo")
-    # Minimum value of the colorbar.
-    CMIN = float(config['settings']['CMIN'])
-    # Maximum value of the colorbar.
-    CMAX = float(config['settings']['CMAX'])
-    # Path to the color values
-    PATH_COLOR = config['settings']['PATH_COLOR']
-    # Maximum energy level
-    EMAX = float(config['settings']['EMAX'])
-    # Minimum energy level
-    EMIN = float(config['settings']['EMIN'])
-    # Step size for basin analysis
-    STEP = float(config['settings']['STEP'])
-    # Colormap name
-    CMAP = config['settings']['CMAP']
-    # Output file name
-    OUT = config['settings']['OUT']
-    main()
