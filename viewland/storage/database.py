@@ -3,17 +3,36 @@
 import numpy as np
 
 from sqlalchemy import create_engine, and_, or_
-from sqlalchemy.orm import Session #sessionmaker
+from sqlalchemy.orm import Session  # sessionmaker
 from sqlalchemy import Column, Integer, Float, PickleType
 
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship, deferred
 from sqlalchemy.ext.declarative import declarative_base
 
+import os
 
 __all__ = ["Minimum", "TransitionState", "Database"]
 
 Base = declarative_base()
+
+
+def create_connect_string(user: str = None,
+                          password: str = None, database_name: str = None,
+                          port: str = None, host: str = None):
+    if not all([user, password, database_name, port, host]):
+        print("Incomplete information provided. Use system environment variables instead.")
+        user = os.environ.get('POSTGRES_USER')
+        password = os.environ.get('POSTGRES_PASSWORD')
+        database_name = os.environ.get('POSTGRES_DB')
+        port = os.environ.get('POSTGRES_PORT')
+        host = os.environ.get('POSTGRES_HOST')
+
+
+    string =  'postgresql+psycopg2://{}:{}@{}:{}/{}'.format(
+        user, password, host, port, database_name)
+    print('The connection string is: ', string)
+    return string 
 
 
 class Minimum(Base):
@@ -236,7 +255,7 @@ class Database(object):
     >>> # TODO: show how to add minima and TS to the database
     >>> for minimum in database.minima():
     >>>     print minimum.energy
-    
+
     See Also
     --------
     Minimum
@@ -246,7 +265,7 @@ class Database(object):
     session = None
 
     def __init__(self,
-                 connect_string, #='postgresql+psycopg2://temp:12345678@localhost:5432/data',
+                 connect_string,  # ='postgresql+psycopg2://temp:12345678@localhost:5432/data',
                  createdb=True):
 
         self.engine = create_engine(connect_string)
