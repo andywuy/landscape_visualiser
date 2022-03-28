@@ -14,17 +14,12 @@ def database2graph(db : Database, Emax : float = None):
 
     Parameters
     ----------
-    db : pele Database
+    db : viewland Database
     Emax : float optional
         including only transition states with energy < Emax
     """
 
     g = nx.Graph()
-    # js850> It's not strictly necessary to add the minima explicitly here,
-    # but for some reason it is much faster if you do (factor of 2).  Even 
-    # if this means there are many more minima in the graph.  I'm not sure 
-    # why this is.  This step is already often the bottleneck of the d-graph 
-    # calculation.
 
     # include only transition states with energy < Emax
     if Emax is not None:
@@ -307,9 +302,9 @@ class _MakeTree(object):
             self.tree.data["ethresh"] = energy_levels[-1] + 1. * de
             self.tree.data["children_not_connected"] = True
 
-        if False:
-            res = self.tree._test_tree()
-            print("tree test result", res)
+        # if False:
+        #     res = self.tree._test_tree()
+        #     print("tree test result", res)
 
         return self.tree
 
@@ -583,7 +578,7 @@ class DisconnectivityGraph(object):
         database2graph() defined in this module to create this 
         from a database.
         
-        >>> from pele.utils.disconnectivity_graph import database2graph
+        >>> from viewland.utils.disconnectivity_graph import database2graph
         >>> graph = database2graph(database)
         >>> dg = DisconnectivityGraph(graph)
          
@@ -629,9 +624,7 @@ class DisconnectivityGraph(object):
     
     See Also
     ---------
-    make_disconnectivity_graph.py :
-        a script (in pele/scripts) to make the disconnectivity graph from the command line
-    pele.storage.Database :
+    viewland.storage.Database :
         The database format in which minima and transition states are stored in pele
     
     Examples
@@ -675,7 +668,7 @@ class DisconnectivityGraph(object):
             elist = sorted(elist)
             self.gmin0 = elist[0][1]
             self.min0list.append(self.gmin0)
-        # print "min0", self.min0.energy, self.min0.id()
+        # print("min0", self.min0.energy, self.min0.id())
         self.transition_states = nx.get_edge_attributes(self.graph, "ts")
         self.tree_list = [[] for _ in range(self.nlevels)]
 
@@ -716,7 +709,7 @@ class DisconnectivityGraph(object):
         #        return graph_list
 
 
-    def _make_tree(self, graph, energy_levels):
+    def _make_tree(self, graph : nx.Graph, energy_levels):
         """make the disconnectivity graph tree
         """
         transition_states = list(nx.get_edge_attributes(graph, "ts").values())
@@ -948,7 +941,7 @@ class DisconnectivityGraph(object):
     # disconnectivity graph
     ##########################################################################
 
-    def _remove_nodes_with_few_edges(self, graph, nmin):
+    def _remove_nodes_with_few_edges(self, graph : nx.Graph, nmin : int):
         rmlist = [n for n in graph.nodes() if graph.degree(n) < nmin]
         if len(rmlist) > 0:
             if self.gmin0 is not None:
@@ -979,7 +972,7 @@ class DisconnectivityGraph(object):
             graph.remove_edge(edge[0], edge[1])
         return graph
 
-    def _reduce_graph(self, graph, min0list):
+    def _reduce_graph(self, graph : nx.Graph, min0list):
         """determine how much of the graph to include in the disconnectivity graph
         """
         used_nodes = []
