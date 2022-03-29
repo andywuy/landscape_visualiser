@@ -13,7 +13,6 @@ services:
     image: viewland
     container_name: viewland_container
     build: .
-    # command: python crud.py
     volumes:
       - ./data:/user_data
     environment:
