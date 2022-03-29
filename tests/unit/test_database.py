@@ -3,9 +3,12 @@ from viewland.storage.database import create_connect_string
 
 
 def test_create_connect_string():
-    string = create_connect_string('user', 'password', 'dbname',
-                                   '1234', 'localhost')
-    assert string == 'postgresql+psycopg2://user:password@localhost:1234/dbname'
+    string = create_connect_string(
+        "user", "password", "dbname", "1234", "localhost"
+    )
+    assert (
+        string == "postgresql+psycopg2://user:password@localhost:1234/dbname"
+    )
 
 
 def test_database_create():

@@ -17,22 +17,29 @@ __all__ = ["Minimum", "TransitionState", "Database"]
 Base = declarative_base()
 
 
-def create_connect_string(user: str = None,
-                          password: str = None, database_name: str = None,
-                          port: str = None, host: str = None):
+def create_connect_string(
+    user: str = None,
+    password: str = None,
+    database_name: str = None,
+    port: str = None,
+    host: str = None,
+):
     if not all([user, password, database_name, port, host]):
-        print("Incomplete information provided. Use system environment variables instead.")
-        user = os.environ.get('POSTGRES_USER')
-        password = os.environ.get('POSTGRES_PASSWORD')
-        database_name = os.environ.get('POSTGRES_DB')
-        port = os.environ.get('POSTGRES_PORT')
-        host = os.environ.get('POSTGRES_HOST')
+        print(
+            "Incomplete information provided. "
+            "Use system environment variables instead. "
+        )
+        user = os.environ.get("POSTGRES_USER")
+        password = os.environ.get("POSTGRES_PASSWORD")
+        database_name = os.environ.get("POSTGRES_DB")
+        port = os.environ.get("POSTGRES_PORT")
+        host = os.environ.get("POSTGRES_HOST")
 
-
-    string =  'postgresql+psycopg2://{}:{}@{}:{}/{}'.format(
-        user, password, host, port, database_name)
-    print('The connection string is: ', string)
-    return string 
+    string = "postgresql+psycopg2://{}:{}@{}:{}/{}".format(
+        user, password, host, port, database_name
+    )
+    print("The connection string is: ", string)
+    return string
 
 
 class Minimum(Base):
@@ -58,25 +65,27 @@ class Minimum(Base):
     pgorder :
         point group order
     invalid :
-        a flag that can be used to indicate a problem with the minimum.  E.g. if
-        the Hessian has more zero eigenvalues than expected.
+        a flag that can be used to indicate a problem with the minimum.  
+        E.g. if the Hessian has more zero eigenvalues than expected.
     user_data :
         Space to store anything that the user wants.  This is stored in SQL
-        as a BLOB, so you can put anything here you want as long as it's serializable.
-        Usually a dictionary works best.
+        as a BLOB, so you can put anything here you want as long as it's 
+        serializable. Usually a dictionary works best.
 
 
     See Also
     --------
     Database, TransitionState
     """
-    __tablename__ = 'tbl_minima'
+
+    __tablename__ = "tbl_minima"
 
     _id = Column(Integer, primary_key=True)
     energy = Column(Float)
-    # deferred means the object is loaded on demand, that saves some time / memory for huge graphs
+    # deferred means the object is loaded on demand,
+    # that saves some time / memory for huge graphs.
     coords = deferred(Column(PickleType))
-    '''coordinates of the minimum'''
+    """coordinates of the minimum"""
     fvib = Column(Float)
     """log product of the squared normal mode frequencies"""
     pgorder = Column(Integer)
@@ -143,25 +152,26 @@ class TransitionState(Base):
     energy :
         The energy of the transition state
     coords :
-        The coordinates of the transition state.  This is stored as a pickled numpy
-        array which SQL interprets as a BLOB.
+        The coordinates of the transition state.  This is stored as a pickled 
+        numpy array which SQL interprets as a BLOB.
     fvib :
-        The log product of the squared normal mode frequencies.  This is used in
-        the free energy calcualations
+        The log product of the squared normal mode frequencies.  This is used 
+        in the free energy calcualations
     pgorder :
         The point group order
     invalid :
-        A flag that is used to indicate a problem with the transition state.  E.g. if
-        the Hessian has more than one negaive eigenvalue then it is a higher order saddle.
+        A flag that is used to indicate a problem with the transition state.  
+        E.g. if the Hessian has more than one negaive eigenvalue then 
+        it is a higher order saddle.
     user_data :
         Space to store anything that the user wants.  This is stored in SQL
-        as a BLOB, so you can put anything here you want as long as it's serializable.
-        Usually a dictionary works best.
+        as a BLOB, so you can put anything here you want as long as it's 
+        serializable. Usually a dictionary works best.
     minimum1, minimum2 :
         These returns the minima on either side of the transition state
     eigenvec :
-        The vector which points along the direction crossing the transition state.
-        This is the eigenvector of the lowest non-zero eigenvalue.
+        The vector which points along the direction crossing the transition 
+        state. This is the eigenvector of the lowest non-zero eigenvalue.
     eigenval :
         The eigenvalue corresponding to `eigenvec`.  A.k.a. the curvature
         along the direction given by `eigenvec`
@@ -171,30 +181,33 @@ class TransitionState(Base):
     --------
     Database, Minimum
     """
+
     __tablename__ = "tbl_transition_states"
     _id = Column(Integer, primary_key=True)
 
     energy = Column(Float)
-    '''energy of transition state'''
+    """energy of transition state"""
 
     coords = deferred(Column(PickleType))
-    '''coordinates of transition state'''
+    """coordinates of transition state"""
 
-    _minimum1_id = Column(Integer, ForeignKey('tbl_minima._id'))
-    minimum1 = relationship("Minimum",
-                            primaryjoin="Minimum._id==TransitionState._minimum1_id")
-    '''first minimum which connects to transition state'''
+    _minimum1_id = Column(Integer, ForeignKey("tbl_minima._id"))
+    minimum1 = relationship(
+        "Minimum", primaryjoin="Minimum._id==TransitionState._minimum1_id"
+    )
+    """first minimum which connects to transition state"""
 
-    _minimum2_id = Column(Integer, ForeignKey('tbl_minima._id'))
-    minimum2 = relationship("Minimum",
-                            primaryjoin="Minimum._id==TransitionState._minimum2_id")
-    '''second minimum which connects to transition state'''
+    _minimum2_id = Column(Integer, ForeignKey("tbl_minima._id"))
+    minimum2 = relationship(
+        "Minimum", primaryjoin="Minimum._id==TransitionState._minimum2_id"
+    )
+    """second minimum which connects to transition state"""
 
     eigenval = Column(Float)
-    '''coordinates of transition state'''
+    """coordinates of transition state"""
 
     eigenvec = deferred(Column(PickleType))
-    '''coordinates of transition state'''
+    """coordinates of transition state"""
 
     fvib = Column(Float)
     """log product of the squared normal mode frequencies"""
@@ -205,7 +218,9 @@ class TransitionState(Base):
     user_data = deferred(Column(PickleType))
     """this can be used to store information about the transition state """
 
-    def __init__(self, energy, coords, min1, min2, eigenval=None, eigenvec=None):
+    def __init__(
+        self, energy, coords, min1, min2, eigenval=None, eigenvec=None
+    ):
         assert min1.id() is not None
         assert min2.id() is not None
 
@@ -228,13 +243,16 @@ class TransitionState(Base):
         return self._id
 
     def __repr__(self):
-        return "<TransitionState(id='{}', energy='{}'>".format(self._id, self.energy)
+        return "<TransitionState(id='{}', energy='{}'>".format(
+            self._id, self.energy
+        )
 
 
 class Database(object):
     """
     Database storage class
-    The Database class uses SQLAlchemy to handle the connection to the database. 
+    The Database class uses SQLAlchemy to handle the connection to the 
+    database. 
 
     Parameters
     ----------
@@ -261,18 +279,20 @@ class Database(object):
     Minimum
     TransitionState
     """
+
     engine = None
     session = None
 
-    def __init__(self,
-                 connect_string,  # ='postgresql+psycopg2://temp:12345678@localhost:5432/data',
-                 createdb=True):
+    def __init__(
+        self, connect_string, createdb=True,
+    ):
 
         self.engine = create_engine(connect_string)
         Base.metadata.drop_all(self.engine)
         Base.metadata.create_all(self.engine)
 
-        # set up the session which will manage the frontend connection to the database
+        # set up the session which will manage the frontend connection
+        # to the database
         self.session = Session(bind=self.engine)
 
     def close(self):
@@ -281,8 +301,9 @@ class Database(object):
 
     def get_lowest_energy_minimum(self):
         """return the minimum with the lowest energy"""
-        candidates = self.session.query(Minimum).order_by(Minimum.energy).\
-            limit(1).all()
+        candidates = (
+            self.session.query(Minimum).order_by(Minimum.energy).limit(1).all()
+        )
         return candidates[0]
 
     def get_minimum_from_id(self, id):
@@ -293,7 +314,9 @@ class Database(object):
         """return the transition state with id """
         return self.session.query(TransitionState).get(id)
 
-    def get_transition_state_between_minima(self, min1: Minimum, min2: Minimum):
+    def get_transition_state_between_minima(
+        self, min1: Minimum, min2: Minimum
+    ):
         """return the TransitionState between two minima.
 
         Returns
@@ -301,13 +324,18 @@ class Database(object):
         ts : None or TransitionState
         """
         m1, m2 = min1, min2
-        candidates = self.session.query(TransitionState).\
-            filter(or_(
-                and_(TransitionState.minimum1 == m1,
-                     TransitionState.minimum2 == m2),
-                and_(TransitionState.minimum1 == m2,
-                     TransitionState.minimum2 == m1),
-            ))
+        candidates = self.session.query(TransitionState).filter(
+            or_(
+                and_(
+                    TransitionState.minimum1 == m1,
+                    TransitionState.minimum2 == m2,
+                ),
+                and_(
+                    TransitionState.minimum1 == m2,
+                    TransitionState.minimum2 == m1,
+                ),
+            )
+        )
 
         for m in candidates:
             return m
@@ -320,9 +348,12 @@ class Database(object):
         -------
         ts : None or TransitionState
         """
-        candidates = self.session.query(TransitionState).\
-            filter(or_(TransitionState.minimum1 == min1,
-                       TransitionState.minimum2 == min1))
+        candidates = self.session.query(TransitionState).filter(
+            or_(
+                TransitionState.minimum1 == min1,
+                TransitionState.minimum2 == min1,
+            )
+        )
 
         return candidates.all()
 
@@ -351,7 +382,11 @@ class Database(object):
         ts : TransitionState
         """
         if order_energy:
-            return self.session.query(TransitionState).order_by(TransitionState.energy).all()
+            return (
+                self.session.query(TransitionState)
+                .order_by(TransitionState.energy)
+                .all()
+            )
         else:
             return self.session.query(TransitionState).all()
 
