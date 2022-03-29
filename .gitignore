@@ -132,4 +132,4 @@ dmypy.json
 tree.pdf
 
 # Exclude the docs folder
-!docs/
+!docs/*

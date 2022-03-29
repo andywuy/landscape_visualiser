@@ -1,0 +1,380 @@
+
+
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>viewland.utils package &#8212; Viewland 0.0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/bizstyle.css" />
+    
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="viewland.storage package" href="viewland.storage.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="viewland.storage.html" title="viewland.storage package"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Viewland 0.0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >viewland</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="viewland.html" accesskey="U">viewland package</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">viewland.utils package</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="viewland-utils-package">
+<h1>viewland.utils package<a class="headerlink" href="#viewland-utils-package" title="Permalink to this headline">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-viewland.utils.converter">
+<span id="viewland-utils-converter-module"></span><h2>viewland.utils.converter module<a class="headerlink" href="#module-viewland.utils.converter" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="viewland.utils.converter.Converter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">viewland.utils.converter.</span></span><span class="sig-name descname"><span class="pre">Converter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">database</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="viewland.storage.html#viewland.storage.database.Database" title="viewland.storage.database.Database"><span class="pre">viewland.storage.database.Database</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mindata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'min.data'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tsdata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ts.data'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#viewland.utils.converter.Converter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>converts PATHSAMPLE files about minima and transition states into the database</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>database</strong> (<em>viewland Database</em>) – the minima and transition states will be place in here.</p></li>
+<li><p><strong>mindata</strong> (<em>str</em>) – <dl class="simple">
+<dt>the files to read from.  The files contain</dt><dd><p>min.data   : information about the minima (like the energy)
+min.ts     : information about transition states (like which minima they connect)</p>
+</dd>
+</dl>
+</p></li>
+<li><p><strong>tsdata</strong> (<em>str</em>) – <dl class="simple">
+<dt>the files to read from.  The files contain</dt><dd><p>min.data   : information about the minima (like the energy)
+min.ts     : information about transition states (like which minima they connect)</p>
+</dd>
+</dl>
+</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="viewland.utils.converter.Converter.convert_no_coords">
+<span class="sig-name descname"><span class="pre">convert_no_coords</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#viewland.utils.converter.Converter.convert_no_coords" title="Permalink to this definition">¶</a></dt>
+<dd><p>convert pathsample database to pele database without loading coordinates</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viewland.utils.converter.Converter.read_min_data">
+<span class="sig-name descname"><span class="pre">read_min_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#viewland.utils.converter.Converter.read_min_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>read min.data file</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viewland.utils.converter.Converter.read_ts_data">
+<span class="sig-name descname"><span class="pre">read_ts_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#viewland.utils.converter.Converter.read_ts_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>read ts.data file</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-viewland.utils.disconnectivity_graph">
+<span id="viewland-utils-disconnectivity-graph-module"></span><h2>viewland.utils.disconnectivity_graph module<a class="headerlink" href="#module-viewland.utils.disconnectivity_graph" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="viewland.utils.disconnectivity_graph.DisconnectivityGraph">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">viewland.utils.disconnectivity_graph.</span></span><span class="sig-name descname"><span class="pre">DisconnectivityGraph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minima</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nlevels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Emax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subgraph_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_by_energy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_by_basin_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">center_gmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_gmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">energy_attribute</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'energy'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_by_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#viewland.utils.disconnectivity_graph.DisconnectivityGraph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>make a disconnectivity graph</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>graph</strong> (<em>a networkx graph</em>) – <p>a graph with Minimum objects as nodes and transition
+states defining the edges.  You can use the function
+database2graph() defined in this module to create this
+from a database.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">viewland.utils.disconnectivity_graph</span> <span class="kn">import</span> <span class="n">database2graph</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span> <span class="o">=</span> <span class="n">database2graph</span><span class="p">(</span><span class="n">database</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dg</span> <span class="o">=</span> <span class="n">DisconnectivityGraph</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
+</pre></div>
+</div>
+</p></li>
+<li><p><strong>nlevels</strong> (<em>int</em>) – how many levels at which to bin the transition states</p></li>
+<li><p><strong>Emax</strong> (<em>float</em>) – maximum energy for transition state cutoff.  Default
+is the maximum energy of all transition states.</p></li>
+<li><p><strong>minima</strong> (<em>list of Minima</em>) – a list of minima to ensure are displayed in the graph.
+e.g. they will be displayed even if they’re in a connected
+cluster smaller than smaller than subgraph_size</p></li>
+<li><p><strong>subgraph_size</strong> (<em>int</em>) – if subgraph_size is not None then all disconnected graphs
+of size greater than subraph_size will be included.</p></li>
+<li><p><strong>order_by_energy</strong> (<em>bool</em>) – order the subtrees by placing ones with lower energy closer
+to the center</p></li>
+<li><p><strong>order_by_basin_size</strong> (<em>bool</em>) – order the subtrees by placing larger basins closer to the center</p></li>
+<li><p><strong>center_gmin</strong> (<em>bool</em>) – when a node splits into its daughter
+nodes, the one containing the global minimum is always placed centrally
+(even if other nodes carry more minima). This does not guarantee that
+the global minimum is central in the overall diagram because other
+nodes may push the one containing the global minimum over to one side</p></li>
+<li><p><strong>include_gmin</strong> (<em>bool</em>) – make sure to include the global minimum, even if it is not part of the
+main connected region</p></li>
+<li><p><strong>node_offset</strong> (<em>float</em>) – offset between 0 and 1 for how to draw the angled lines.
+0 for no angle, draw horizontally out then vertically down.  1 for
+angled lines all the way to the next energy level</p></li>
+<li><p><strong>energy_attribute</strong> (<em>string</em><em>, </em><em>optional</em>) – attribute which contains energy. default is energy. This attribute can
+be used to generate free energy disconnectivity graphs</p></li>
+<li><p><strong>order_by_value</strong> (callable, optional, <cite>v = order_by_value(m)</cite>) – If this function is passed the minima at each level will be sorted by this value
+with small values to the left.  A group of minima will be sorted according to the
+smallest value in the group.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">viewland.storage.Database</span></code></dt><dd><p>The database format in which minima and transition states are stored in pele</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Examples</p>
+<p>These examples assume a Database with minima already exists</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span> <span class="o">=</span> <span class="n">database2graph</span><span class="p">(</span><span class="n">database</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dg</span> <span class="o">=</span> <span class="n">DisconnectivityGraph</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dg</span><span class="o">.</span><span class="n">calculate</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dg</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="viewland.utils.disconnectivity_graph.DisconnectivityGraph.calculate">
+<span class="sig-name descname"><span class="pre">calculate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#viewland.utils.disconnectivity_graph.DisconnectivityGraph.calculate" title="Permalink to this definition">¶</a></dt>
+<dd><p>do the calculations necessary to draw the diconnectivity graph</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viewland.utils.disconnectivity_graph.DisconnectivityGraph.color_by_group">
+<span class="sig-name descname"><span class="pre">color_by_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">groups</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#viewland.utils.disconnectivity_graph.DisconnectivityGraph.color_by_group" title="Permalink to this definition">¶</a></dt>
+<dd><p>color the graph based on specified grouping of minima</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>groups</strong> (<em>list</em>) – list of groups of minima that should have the same color</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>For each node, check all minima for which the node is a parent.
+If all minima are contained on one of the groups, the node
+will be coloured to represent that group.
+If any minimum is not contained on one of the groups, the node
+is not coloured.
+If all minima are contained in groups but more than one group
+is represented, the node will be the colour of the last group listed</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viewland.utils.disconnectivity_graph.DisconnectivityGraph.color_by_value">
+<span class="sig-name descname"><span class="pre">color_by_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minimum_to_value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colormap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#viewland.utils.disconnectivity_graph.DisconnectivityGraph.color_by_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>color the graph by values associated with minima (e.g. order parameter)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>minimum_to_value</strong> (<em>callable</em>) – A function that accepts a minimum and returns a float value.
+return None to indicate no color for this minimum</p></li>
+<li><p><strong>colormap</strong> (<em>callable</em><em>, </em><em>optional</em>) – function which converts a float in (0,1) to a matplotlib color (RGB)</p></li>
+<li><p><strong>normalize_values</strong> (<em>bool</em>) – if True the values will be normalized to fall between 0 and 1</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Each node in the graph will be colored according to the value of the
+child minimum with the largest value.  If any child minimum has value None
+then the node will not be colored</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viewland.utils.disconnectivity_graph.DisconnectivityGraph.draw_minima">
+<span class="sig-name descname"><span class="pre">draw_minima</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minima</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#viewland.utils.disconnectivity_graph.DisconnectivityGraph.draw_minima" title="Permalink to this definition">¶</a></dt>
+<dd><p>draw a specified list of minima as points</p>
+<p>minima : list of minima
+axes : matlplotlib axes</p>
+<blockquote>
+<div><p>Draw them on these axes.  If None, use self.axes.</p>
+</div></blockquote>
+<dl class="simple">
+<dt>kwargs<span class="classifier">kwargs</span></dt><dd><p>additional keyword arguments will be passed to matplolib.Axes.scatter().
+Use this to specify how to draw the points.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viewland.utils.disconnectivity_graph.DisconnectivityGraph.get_minima_layout">
+<span class="sig-name descname"><span class="pre">get_minima_layout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#viewland.utils.disconnectivity_graph.DisconnectivityGraph.get_minima_layout" title="Permalink to this definition">¶</a></dt>
+<dd><p>return the x position of the minima</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viewland.utils.disconnectivity_graph.DisconnectivityGraph.get_tree_layout">
+<span class="sig-name descname"><span class="pre">get_tree_layout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#viewland.utils.disconnectivity_graph.DisconnectivityGraph.get_tree_layout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the x position of the trees</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viewland.utils.disconnectivity_graph.DisconnectivityGraph.label_minima">
+<span class="sig-name descname"><span class="pre">label_minima</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minima_labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rotation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">60.0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#viewland.utils.disconnectivity_graph.DisconnectivityGraph.label_minima" title="Permalink to this definition">¶</a></dt>
+<dd><p>label the specified minima</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>minima_labels</strong> (<em>dict</em>) – dictionary with minima as keys and labels as values.
+i.e. label = minima_labels[minimum]</p></li>
+<li><p><strong>axes</strong> (<em>matplotlib axis object</em><em>, </em><em>optional</em>) – The axes we are working on</p></li>
+<li><p><strong>rotation</strong> (<em>float</em>) – angle (in degrees) of how much to rotate the text</p></li>
+<li><p><strong>kwargs</strong> (<em>kwargs</em>) – additional keyword arguments are passed on to matplotlib
+ax.set_xticklabels()</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>if the labels are outside of the figure bounding box you can fix it with
+plt.tight_layout() or fig.tight_layout()</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viewland.utils.disconnectivity_graph.DisconnectivityGraph.plot">
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">show_minima</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_trees</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linewidth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#viewland.utils.disconnectivity_graph.DisconnectivityGraph.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>draw the disconnectivity graph using matplotlib</p>
+<p>don’t forget to call calculate() first</p>
+<p>also, you must call pyplot.show() to actually see the plot</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viewland.utils.disconnectivity_graph.DisconnectivityGraph.savefig">
+<span class="sig-name descname"><span class="pre">savefig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#viewland.utils.disconnectivity_graph.DisconnectivityGraph.savefig" title="Permalink to this definition">¶</a></dt>
+<dd><p>simple wrapper for matplotlib.pyplot.savefig()</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viewland.utils.disconnectivity_graph.DisconnectivityGraph.set_energy_levels">
+<span class="sig-name descname"><span class="pre">set_energy_levels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">elevels</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#viewland.utils.disconnectivity_graph.DisconnectivityGraph.set_energy_levels" title="Permalink to this definition">¶</a></dt>
+<dd><p>manually set the energy levels</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viewland.utils.disconnectivity_graph.DisconnectivityGraph.show">
+<span class="sig-name descname"><span class="pre">show</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#viewland.utils.disconnectivity_graph.DisconnectivityGraph.show" title="Permalink to this definition">¶</a></dt>
+<dd><p>simple wrapper for matplotlib.pyplot.show()</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="viewland.utils.disconnectivity_graph.database2graph">
+<span class="sig-prename descclassname"><span class="pre">viewland.utils.disconnectivity_graph.</span></span><span class="sig-name descname"><span class="pre">database2graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="viewland.storage.html#viewland.storage.database.Database" title="viewland.storage.database.Database"><span class="pre">viewland.storage.database.Database</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">Emax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#viewland.utils.disconnectivity_graph.database2graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>make a networkx graph from a database</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>db</strong> (<em>viewland Database</em>) – </p></li>
+<li><p><strong>Emax</strong> (<em>float optional</em>) – including only transition states with energy &lt; Emax</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-viewland.utils">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-viewland.utils" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">viewland.utils package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-viewland.utils.converter">viewland.utils.converter module</a></li>
+<li><a class="reference internal" href="#module-viewland.utils.disconnectivity_graph">viewland.utils.disconnectivity_graph module</a></li>
+<li><a class="reference internal" href="#module-viewland.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="viewland.storage.html"
+                          title="previous chapter">viewland.storage package</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/viewland.utils.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="viewland.storage.html" title="viewland.storage package"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Viewland 0.0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >viewland</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="viewland.html" >viewland package</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">viewland.utils package</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, Yuchen Wu.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.4.0.
+    </div>
+  </body>
+</html>
