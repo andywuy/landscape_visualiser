@@ -8,7 +8,7 @@ import os
 import configparser
 import matplotlib.pyplot as plt
 
-plt.rcParams["font.family"] = "Times New Roman"
+# plt.rcParams["font.family"] = "Times New Roman"
 plt.rcParams["font.size"] = 24
 plt.rcParams["figure.autolayout"] = True
 
@@ -86,5 +86,5 @@ def test_gen_tree():
     )
     fig.savefig(OUT)
     assert dg.graph.number_of_nodes() == 10
-    # Must close the database connection.
+    # Must close the database connection at the end.
     db.close()

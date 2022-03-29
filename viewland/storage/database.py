@@ -1,5 +1,5 @@
-"""Database for simulation data in a relational database
-"""
+""" Database for simulation data in a relational database."""
+
 import numpy as np
 
 from sqlalchemy import create_engine, and_, or_
@@ -49,23 +49,23 @@ class Minimum(Base):
     Parameters
     ----------
     energy : float
-        energy of the minimum.
+        Energy of the minimum.
     coords : numpy array
-        coordinates of the minimum.
+        Coordinates of the minimum.
 
     Attributes
     ----------
     energy :
-        the energy of the minimum.
+        The energy of the minimum.
     coords :
-        the coordinates of the minimum.  This is stored as a pickled numpy
+        The coordinates of the minimum.  This is stored as a pickled numpy
         array which SQL interprets as a BLOB.
     fvib :
-        the log product of the squared normal mode frequencies.
+        The log product of the squared normal mode frequencies.
     pgorder :
-        point group order
+        The point group order of the minimum.
     invalid :
-        a flag that can be used to indicate a problem with the minimum.  
+        A flag that can be used to indicate a problem with the minimum.  
         E.g. if the Hessian has more zero eigenvalues than expected.
     user_data :
         Space to store anything that the user wants.  This is stored in SQL
@@ -85,15 +85,14 @@ class Minimum(Base):
     # deferred means the object is loaded on demand,
     # that saves some time / memory for huge graphs.
     coords = deferred(Column(PickleType))
-    """coordinates of the minimum"""
+
     fvib = Column(Float)
-    """log product of the squared normal mode frequencies"""
+
     pgorder = Column(Integer)
-    """point group order"""
+
     invalid = Column(Integer)
-    """flag indicating if the minimum is invalid"""
+
     user_data = deferred(Column(PickleType))
-    """this can be used to store information about the minimum"""
 
     def __init__(self, energy, coords):
         self.energy = energy
@@ -101,7 +100,7 @@ class Minimum(Base):
         self.invalid = False
 
     def id(self):
-        """return the sql id of the object"""
+        """Return the sql id of the object"""
         return self._id
 
     def __eq__(self, m):
@@ -129,36 +128,35 @@ class TransitionState(Base):
     Parameters
     ----------
     energy : float
-        energy of the transition state.
+        Energy of the transition state.
     coords : numpy array
-        coordinates of the transition state.
+        Coordinates of the transition state.
     min1 : Minimum object
-        first minimum connected to the transition state.
+        First minimum connected to the transition state.
     min2 : Minimum object
-        second minimum connected to the transition state.
+        Second minimum connected to the transition state.
     eigenval : float, optional
-        lowest (single negative) eigenvalue of the saddle point
+        Lowest (single negative) eigenvalue of the saddle point.
     eigenvec : numpy array, optional
-        eigenvector which corresponds to the negative eigenvalue
+        Eigenvector which corresponds to the negative eigenvalue.
     fvib : float
-        log product of squared frequencies for free energy calculation
+        The log product of squared frequencies for free energy calculation.
     pgorder : integer
-        point group order
+        The point group order of the saddle point.
 
 
 
     Attributes
     ----------
     energy :
-        The energy of the transition state
+        The energy of the transition state.
     coords :
         The coordinates of the transition state.  This is stored as a pickled 
         numpy array which SQL interprets as a BLOB.
     fvib :
-        The log product of the squared normal mode frequencies.  This is used 
-        in the free energy calcualations
+        The log product of the squared normal mode frequencies.
     pgorder :
-        The point group order
+        The point group order oof the transition state.
     invalid :
         A flag that is used to indicate a problem with the transition state.  
         E.g. if the Hessian has more than one negaive eigenvalue then 
@@ -168,13 +166,13 @@ class TransitionState(Base):
         as a BLOB, so you can put anything here you want as long as it's 
         serializable. Usually a dictionary works best.
     minimum1, minimum2 :
-        These returns the minima on either side of the transition state
+        These returns the minima on either side of the transition state.
     eigenvec :
         The vector which points along the direction crossing the transition 
         state. This is the eigenvector of the lowest non-zero eigenvalue.
     eigenval :
         The eigenvalue corresponding to `eigenvec`.  A.k.a. the curvature
-        along the direction given by `eigenvec`
+        along the direction given by `eigenvec`.
 
 
     See Also
@@ -186,37 +184,30 @@ class TransitionState(Base):
     _id = Column(Integer, primary_key=True)
 
     energy = Column(Float)
-    """energy of transition state"""
 
     coords = deferred(Column(PickleType))
-    """coordinates of transition state"""
 
     _minimum1_id = Column(Integer, ForeignKey("tbl_minima._id"))
     minimum1 = relationship(
         "Minimum", primaryjoin="Minimum._id==TransitionState._minimum1_id"
     )
-    """first minimum which connects to transition state"""
 
     _minimum2_id = Column(Integer, ForeignKey("tbl_minima._id"))
     minimum2 = relationship(
         "Minimum", primaryjoin="Minimum._id==TransitionState._minimum2_id"
     )
-    """second minimum which connects to transition state"""
 
     eigenval = Column(Float)
-    """coordinates of transition state"""
 
     eigenvec = deferred(Column(PickleType))
-    """coordinates of transition state"""
 
     fvib = Column(Float)
-    """log product of the squared normal mode frequencies"""
+
     pgorder = Column(Integer)
-    """point group order"""
+
     invalid = Column(Integer)
-    """flag indicating if the transition state is invalid"""
+
     user_data = deferred(Column(PickleType))
-    """this can be used to store information about the transition state """
 
     def __init__(
         self, energy, coords, min1, min2, eigenval=None, eigenvec=None
@@ -239,7 +230,7 @@ class TransitionState(Base):
         self.invalid = False
 
     def id(self):
-        """return the sql id of the object"""
+        """Return the sql id of the object."""
         return self._id
 
     def __repr__(self):
@@ -250,16 +241,15 @@ class TransitionState(Base):
 
 class Database(object):
     """
-    Database storage class
-    The Database class uses SQLAlchemy to handle the connection to the 
+    Database storage class uses SQLAlchemy to handle the connection to the 
     database. 
 
     Parameters
     ----------
     connect_string : string
-        connection string for sqlalchemy.create_engine .
+        Connection string for sqlalchemy.create_engine .
     createdb : boolean, optional
-        create database if not exists, default is true.
+        Create database if not exists, default is true.
 
     Attributes
     ----------
@@ -296,28 +286,29 @@ class Database(object):
         self.session = Session(bind=self.engine)
 
     def close(self):
+        '''Close the connection to the database.'''
         self.session.commit()
         self.session.close()
 
     def get_lowest_energy_minimum(self):
-        """return the minimum with the lowest energy"""
+        """Return the minimum with the lowest energy."""
         candidates = (
             self.session.query(Minimum).order_by(Minimum.energy).limit(1).all()
         )
         return candidates[0]
 
     def get_minimum_from_id(self, id):
-        """return the minimum with a given id """
+        """Return the minimum with a given id. """
         return self.session.query(Minimum).get(id)
 
     def get_transition_state_from_id(self, id):
-        """return the transition state with id """
+        """Return the transition state with a given id. """
         return self.session.query(TransitionState).get(id)
 
     def get_transition_state_between_minima(
         self, min1: Minimum, min2: Minimum
     ):
-        """return the TransitionState between two minima.
+        """Return the TransitionState between two minima.
 
         Returns
         -------
@@ -342,7 +333,7 @@ class Database(object):
         return None
 
     def get_transition_states_connected_to_minimum(self, min1: Minimum):
-        """return all transition states connected to a minimum.
+        """Return all transition states connected to a minimum.
 
         Returns
         -------
@@ -358,12 +349,12 @@ class Database(object):
         return candidates.all()
 
     def minima(self, order_energy=True):
-        """return an iterator over all minima in database
+        """Return an iterator over all minima in database.
 
         Parameters
         ----------
         order_energy : bool
-            order the minima by energy
+            Whether order the minima by energy.
 
         Returns
         -------
@@ -375,7 +366,12 @@ class Database(object):
             return self.session.query(Minimum).all()
 
     def transition_states(self, order_energy=False):
-        """return an iterator over all transition states in database
+        """Return an iterator over all transition states in database.
+
+        Parameters
+        ----------
+        order_energy : bool
+            Whether order the transition states by energy.
 
         Returns
         -------
@@ -391,9 +387,9 @@ class Database(object):
             return self.session.query(TransitionState).all()
 
     def number_of_minima(self):
-        """return the number of minima in the database"""
+        """Return the number of minima in the database."""
         return self.session.query(Minimum).count()
 
     def number_of_transition_states(self):
-        """return the number of transition states in the database"""
+        """Return the number of transition states in the database."""
         return self.session.query(TransitionState).count()
