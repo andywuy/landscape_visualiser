@@ -1,6 +1,9 @@
-# Run the file in result_i_clusters_j_outliers folder.
 # The script produces the disconnectivity graph.
-# tinfo, min.data and ts.data must be present in the current directory.
+# Run the file in the folder containing min.data, ts.data, tinfo and diff.map.
+# min.data contains information about the minima on the landscape.
+# ts.data contains information about the transition states on the landscape.
+# tinfo is the configuration file for this script.
+# diff.map indicates the color of each minimum.
 
 from viewland.utils import DisconnectivityGraph, database2graph, Converter
 from viewland.storage import Database
@@ -13,7 +16,7 @@ import configparser
 import sys
 import matplotlib.pyplot as plt
 
-plt.rcParams["font.family"] = "Times New Roman"
+# plt.rcParams["font.family"] = "Times New Roman"
 plt.rcParams["font.size"] = 24
 plt.rcParams["figure.autolayout"] = True
 
@@ -70,7 +73,7 @@ def main():
     )
     fig.savefig(OUT)
     print(dg.graph.number_of_nodes(), graph.number_of_edges())
-    # Must close the database connection.
+    # Must close the database connection at the end.
     db.close()
 
 
