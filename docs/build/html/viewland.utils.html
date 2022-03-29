@@ -134,11 +134,11 @@ transition states (like which minima they connect).</p>
 <dt class="sig sig-object py" id="viewland.utils.disconnectivity_graph.DisconnectivityGraph">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">viewland.utils.disconnectivity_graph.</span></span><span class="sig-name descname"><span class="pre">DisconnectivityGraph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minima</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nlevels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Emax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subgraph_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_by_energy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_by_basin_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">center_gmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_gmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">energy_attribute</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'energy'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_by_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#viewland.utils.disconnectivity_graph.DisconnectivityGraph" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>make a disconnectivity graph</p>
+<p>Make a disconnectivity graph.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>graph</strong> (<em>a networkx graph</em>) – <p>a graph with Minimum objects as nodes and transition
+<li><p><strong>graph</strong> (<em>a networkx graph</em>) – <p>A graph with Minimum objects as nodes and transition
 states defining the edges.  You can use the function
 database2graph() defined in this module to create this
 from a database.</p>
@@ -148,31 +148,32 @@ from a database.</p>
 </pre></div>
 </div>
 </p></li>
-<li><p><strong>nlevels</strong> (<em>int</em>) – how many levels at which to bin the transition states</p></li>
-<li><p><strong>Emax</strong> (<em>float</em>) – maximum energy for transition state cutoff.  Default
+<li><p><strong>nlevels</strong> (<em>int</em>) – The number of levels at which to bin the transition states.</p></li>
+<li><p><strong>Emax</strong> (<em>float</em>) – The maximum energy for transition state cutoff.  Default
 is the maximum energy of all transition states.</p></li>
-<li><p><strong>minima</strong> (<em>list of Minima</em>) – a list of minima to ensure are displayed in the graph.
+<li><p><strong>minima</strong> (<em>list of Minima</em>) – A list of minima to ensure are displayed in the graph.
 e.g. they will be displayed even if they’re in a connected
-cluster smaller than smaller than subgraph_size</p></li>
-<li><p><strong>subgraph_size</strong> (<em>int</em>) – if subgraph_size is not None then all disconnected graphs
+cluster smaller than smaller than subgraph_size.</p></li>
+<li><p><strong>subgraph_size</strong> (<em>int</em>) – If subgraph_size is not None then all disconnected graphs
 of size greater than subraph_size will be included.</p></li>
-<li><p><strong>order_by_energy</strong> (<em>bool</em>) – order the subtrees by placing ones with lower energy closer
-to the center</p></li>
-<li><p><strong>order_by_basin_size</strong> (<em>bool</em>) – order the subtrees by placing larger basins closer to the center</p></li>
-<li><p><strong>center_gmin</strong> (<em>bool</em>) – when a node splits into its daughter
+<li><p><strong>order_by_energy</strong> (<em>bool</em>) – Order the subtrees by placing ones with lower energy closer
+to the center.</p></li>
+<li><p><strong>order_by_basin_size</strong> (<em>bool</em>) – Order the subtrees by placing larger basins closer to the center.</p></li>
+<li><p><strong>center_gmin</strong> (<em>bool</em>) – When a node splits into its daughter
 nodes, the one containing the global minimum is always placed centrally
 (even if other nodes carry more minima). This does not guarantee that
 the global minimum is central in the overall diagram because other
-nodes may push the one containing the global minimum over to one side</p></li>
-<li><p><strong>include_gmin</strong> (<em>bool</em>) – make sure to include the global minimum, even if it is not part of the
-main connected region</p></li>
-<li><p><strong>node_offset</strong> (<em>float</em>) – offset between 0 and 1 for how to draw the angled lines.
+nodes may push the one containing the global minimum over to one side.</p></li>
+<li><p><strong>include_gmin</strong> (<em>bool</em>) – Make sure to include the global minimum, even if it is not part of the
+main connected region.</p></li>
+<li><p><strong>node_offset</strong> (<em>float</em>) – Offset between 0 and 1 for how to draw the angled lines.
 0 for no angle, draw horizontally out then vertically down.  1 for
-angled lines all the way to the next energy level</p></li>
-<li><p><strong>energy_attribute</strong> (<em>string</em><em>, </em><em>optional</em>) – attribute which contains energy. default is energy. This attribute can
+angled lines all the way to the next energy level.</p></li>
+<li><p><strong>energy_attribute</strong> (<em>string</em><em>, </em><em>optional</em>) – Attribute which contains energy. default is energy. This attribute can
 be used to generate free energy disconnectivity graphs</p></li>
-<li><p><strong>order_by_value</strong> (callable, optional, <cite>v = order_by_value(m)</cite>) – If this function is passed the minima at each level will be sorted by this value
-with small values to the left.  A group of minima will be sorted according to the
+<li><p><strong>order_by_value</strong> (callable, optional, <cite>v = order_by_value(m)</cite>) – If this function is passed the minima at each level will be
+sorted by this value with small values to the left.
+A group of minima will be sorted according to the
 smallest value in the group.</p></li>
 </ul>
 </dd>
@@ -197,16 +198,16 @@ smallest value in the group.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="viewland.utils.disconnectivity_graph.DisconnectivityGraph.calculate">
 <span class="sig-name descname"><span class="pre">calculate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#viewland.utils.disconnectivity_graph.DisconnectivityGraph.calculate" title="Permalink to this definition">¶</a></dt>
-<dd><p>do the calculations necessary to draw the diconnectivity graph</p>
+<dd><p>Do the calculations necessary to draw the diconnectivity graph.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="viewland.utils.disconnectivity_graph.DisconnectivityGraph.color_by_group">
 <span class="sig-name descname"><span class="pre">color_by_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">groups</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#viewland.utils.disconnectivity_graph.DisconnectivityGraph.color_by_group" title="Permalink to this definition">¶</a></dt>
-<dd><p>color the graph based on specified grouping of minima</p>
+<dd><p>Color the graph based on specified grouping of minima.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>groups</strong> (<em>list</em>) – list of groups of minima that should have the same color</p>
+<dd class="field-odd"><p><strong>groups</strong> (<em>list</em>) – A list of groups of minima that should have the same color.</p>
 </dd>
 </dl>
 <p class="rubric">Notes</p>
@@ -222,35 +223,38 @@ is represented, the node will be the colour of the last group listed</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="viewland.utils.disconnectivity_graph.DisconnectivityGraph.color_by_value">
 <span class="sig-name descname"><span class="pre">color_by_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minimum_to_value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colormap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#viewland.utils.disconnectivity_graph.DisconnectivityGraph.color_by_value" title="Permalink to this definition">¶</a></dt>
-<dd><p>color the graph by values associated with minima (e.g. order parameter)</p>
+<dd><p>Color the graph by values associated with minima (e.g. order
+parameter).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>minimum_to_value</strong> (<em>callable</em>) – A function that accepts a minimum and returns a float value.
-return None to indicate no color for this minimum</p></li>
-<li><p><strong>colormap</strong> (<em>callable</em><em>, </em><em>optional</em>) – function which converts a float in (0,1) to a matplotlib color (RGB)</p></li>
-<li><p><strong>normalize_values</strong> (<em>bool</em>) – if True the values will be normalized to fall between 0 and 1</p></li>
+return None to indicate no color for this minimum.</p></li>
+<li><p><strong>colormap</strong> (<em>callable</em><em>, </em><em>optional</em>) – A function which converts a float in (0,1) to a matplotlib
+color (RGB).</p></li>
+<li><p><strong>normalize_values</strong> (<em>bool</em>) – If True the values will be normalized to fall between 0 and 1.</p></li>
 </ul>
 </dd>
 </dl>
 <p class="rubric">Notes</p>
 <p>Each node in the graph will be colored according to the value of the
-child minimum with the largest value.  If any child minimum has value None
-then the node will not be colored</p>
+child minimum with the largest value.  If any child minimum has value
+None then the node will not be colored.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="viewland.utils.disconnectivity_graph.DisconnectivityGraph.draw_minima">
 <span class="sig-name descname"><span class="pre">draw_minima</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minima</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#viewland.utils.disconnectivity_graph.DisconnectivityGraph.draw_minima" title="Permalink to this definition">¶</a></dt>
-<dd><p>draw a specified list of minima as points</p>
-<p>minima : list of minima
-axes : matlplotlib axes</p>
-<blockquote>
-<div><p>Draw them on these axes.  If None, use self.axes.</p>
-</div></blockquote>
-<dl class="simple">
-<dt>kwargs<span class="classifier">kwargs</span></dt><dd><p>additional keyword arguments will be passed to matplolib.Axes.scatter().
-Use this to specify how to draw the points.</p>
+<dd><p>Draw a specified list of minima as points.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>minima</strong> (<em>list of minima</em>) – </p></li>
+<li><p><strong>axes</strong> (<em>matlplotlib axes</em>) – Draw them on these axes.  If None, use self.axes.</p></li>
+<li><p><strong>kwargs</strong> (<em>kwargs</em>) – Additional keyword arguments will be passed to
+matplolib.Axes.scatter(). Use this to specify how to draw the
+points.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -258,60 +262,61 @@ Use this to specify how to draw the points.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="viewland.utils.disconnectivity_graph.DisconnectivityGraph.get_minima_layout">
 <span class="sig-name descname"><span class="pre">get_minima_layout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#viewland.utils.disconnectivity_graph.DisconnectivityGraph.get_minima_layout" title="Permalink to this definition">¶</a></dt>
-<dd><p>return the x position of the minima</p>
+<dd><p>Return the x position of the minima.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="viewland.utils.disconnectivity_graph.DisconnectivityGraph.get_tree_layout">
 <span class="sig-name descname"><span class="pre">get_tree_layout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#viewland.utils.disconnectivity_graph.DisconnectivityGraph.get_tree_layout" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the x position of the trees</p>
+<dd><p>Returns the x position of the trees.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="viewland.utils.disconnectivity_graph.DisconnectivityGraph.label_minima">
 <span class="sig-name descname"><span class="pre">label_minima</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minima_labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rotation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">60.0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#viewland.utils.disconnectivity_graph.DisconnectivityGraph.label_minima" title="Permalink to this definition">¶</a></dt>
-<dd><p>label the specified minima</p>
+<dd><p>Label the specified minima.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>minima_labels</strong> (<em>dict</em>) – dictionary with minima as keys and labels as values.
+<li><p><strong>minima_labels</strong> (<em>dict</em>) – A dictionary with minima as keys and labels as values.
 i.e. label = minima_labels[minimum]</p></li>
-<li><p><strong>axes</strong> (<em>matplotlib axis object</em><em>, </em><em>optional</em>) – The axes we are working on</p></li>
-<li><p><strong>rotation</strong> (<em>float</em>) – angle (in degrees) of how much to rotate the text</p></li>
-<li><p><strong>kwargs</strong> (<em>kwargs</em>) – additional keyword arguments are passed on to matplotlib
-ax.set_xticklabels()</p></li>
+<li><p><strong>axes</strong> (<em>matplotlib axis object</em><em>, </em><em>optional</em>) – The axes we are working on.</p></li>
+<li><p><strong>rotation</strong> (<em>float</em>) – The angle (in degrees) of how much to rotate the text.</p></li>
+<li><p><strong>kwargs</strong> (<em>kwargs</em>) – Additional keyword arguments are passed on to matplotlib
+ax.set_xticklabels().</p></li>
 </ul>
 </dd>
 </dl>
 <p class="rubric">Notes</p>
-<p>if the labels are outside of the figure bounding box you can fix it with
-plt.tight_layout() or fig.tight_layout()</p>
+<p>If the labels are outside of the figure bounding box you can fix it
+with fig.tight_layout() .</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="viewland.utils.disconnectivity_graph.DisconnectivityGraph.plot">
-<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">show_minima</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_trees</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linewidth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#viewland.utils.disconnectivity_graph.DisconnectivityGraph.plot" title="Permalink to this definition">¶</a></dt>
-<dd><p>draw the disconnectivity graph using matplotlib</p>
-<p>don’t forget to call calculate() first</p>
-<p>also, you must call pyplot.show() to actually see the plot</p>
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">show_minima</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linewidth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#viewland.utils.disconnectivity_graph.DisconnectivityGraph.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw the disconnectivity graph using matplotlib.</p>
+<p class="rubric">Notes</p>
+<p>Don’t forget to call calculate() first.
+Also, you must call pyplot.show() to actually see the plot.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="viewland.utils.disconnectivity_graph.DisconnectivityGraph.savefig">
 <span class="sig-name descname"><span class="pre">savefig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#viewland.utils.disconnectivity_graph.DisconnectivityGraph.savefig" title="Permalink to this definition">¶</a></dt>
-<dd><p>simple wrapper for matplotlib.pyplot.savefig()</p>
+<dd><p>A simple wrapper for matplotlib.pyplot.savefig().</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="viewland.utils.disconnectivity_graph.DisconnectivityGraph.set_energy_levels">
 <span class="sig-name descname"><span class="pre">set_energy_levels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">elevels</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#viewland.utils.disconnectivity_graph.DisconnectivityGraph.set_energy_levels" title="Permalink to this definition">¶</a></dt>
-<dd><p>manually set the energy levels</p>
+<dd><p>Manually set the energy levels.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="viewland.utils.disconnectivity_graph.DisconnectivityGraph.show">
 <span class="sig-name descname"><span class="pre">show</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#viewland.utils.disconnectivity_graph.DisconnectivityGraph.show" title="Permalink to this definition">¶</a></dt>
-<dd><p>simple wrapper for matplotlib.pyplot.show()</p>
+<dd><p>A simple wrapper for matplotlib.pyplot.show().</p>
 </dd></dl>
 
 </dd></dl>
@@ -319,12 +324,12 @@ plt.tight_layout() or fig.tight_layout()</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="viewland.utils.disconnectivity_graph.database2graph">
 <span class="sig-prename descclassname"><span class="pre">viewland.utils.disconnectivity_graph.</span></span><span class="sig-name descname"><span class="pre">database2graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="viewland.storage.html#viewland.storage.database.Database" title="viewland.storage.database.Database"><span class="pre">viewland.storage.database.Database</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">Emax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#viewland.utils.disconnectivity_graph.database2graph" title="Permalink to this definition">¶</a></dt>
-<dd><p>make a networkx graph from a database</p>
+<dd><p>Make a networkx graph from a database.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>db</strong> (<em>viewland Database</em>) – </p></li>
-<li><p><strong>Emax</strong> (<em>float optional</em>) – including only transition states with energy &lt; Emax</p></li>
+<li><p><strong>Emax</strong> (<em>float optional</em>) – Including only transition states with energy &lt; Emax.</p></li>
 </ul>
 </dd>
 </dl>
