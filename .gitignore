@@ -130,3 +130,6 @@ dmypy.json
 
 # Custom files
 tree.pdf
+
+# Exclude the docs folder
+!docs/
