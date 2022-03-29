@@ -4,3 +4,4 @@ numpy
 networkx
 ipython
 matplotlib
+pytest

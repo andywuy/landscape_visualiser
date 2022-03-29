@@ -20,7 +20,7 @@ services:
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=password 
       - POSTGRES_DB=dbname   
-      - POSTGRES_CONTAINER_NAME=postgres_container
+      - POSTGRES_HOST=postgres_container
       - POSTGRES_PORT=5432
     depends_on:
       - database
