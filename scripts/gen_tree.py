@@ -29,25 +29,27 @@ def main():
         print(err)
         exit(1)
 
-    # Create the database
+    # Create the database.
     db = Database(create_connect_string())
+
+    # Read in data from min.data ts.data.
     converter = Converter(db)
-    # Read in data from min.data ts.data
     converter.convert_no_coords()
 
     # Define the colorbar range.
-    # color_range will be normalised to [0,1] by cm.ScalarMappable
+    # color_range will be scaled to [0,1] by cm.ScalarMappable.
     color_range = [CMIN, CMAX]
 
-    # Read in color values of the minima
+    # Read in color values of the minima.
     values = np.genfromtxt(PATH_COLOR)
-    # Transform the values
+
+    # Scale the values according to the colorbar range.
     values = values / (CMAX - CMIN) - (CMIN / (CMAX - CMIN) - 0)
 
-    # Manually set the energy levels. Must be ascending list of floats
+    # Define the energy levels, which must be an ascending list of floats.
     elevels = list(np.arange(EMIN, EMAX + STEP, STEP, dtype=float))
 
-    # Create the disconnectivity graph
+    # Create the disconnectivity graph.
     graph = database2graph(db)
     dg = DisconnectivityGraph(graph)
     dg.set_energy_levels(elevels)
@@ -55,6 +57,17 @@ def main():
 
     # Color the minima
     def minimum_to_value(mini):
+        """
+        Auxilary function used by dg.color_by_value.
+        
+        Parameter
+        ---------
+        mini : Minimum
+
+        Return
+        ------
+        color of the minimum : float
+        """
         # The index of mini starts from 1, but values index starts from 0.
         return float(values[int(mini.id()) - 1])
 
@@ -62,7 +75,7 @@ def main():
         minimum_to_value, colormap=cm.get_cmap(CMAP), normalize_values=False
     )
 
-    # Create matplotlib graph
+    # Draw the disconnectivity graph and save as pdf.
     dg.plot(linewidth=3)
     fig = plt.gcf()
     fig.set_size_inches(5, 5)
@@ -72,7 +85,8 @@ def main():
         mappable=mappable, shrink=0.3, ticks=[CMIN, 0, CMAX], pad=0.01
     )
     fig.savefig(OUT)
-    print(dg.graph.number_of_nodes(), graph.number_of_edges())
+    # print(dg.graph.number_of_nodes(), graph.number_of_edges())
+
     # Must close the database connection at the end.
     db.close()
 
@@ -90,16 +104,16 @@ if __name__ == "__main__":
     CMIN = float(config["settings"]["CMIN"])
     # Maximum value of the colorbar.
     CMAX = float(config["settings"]["CMAX"])
-    # Path to the color values
+    # Path to the color values of minima.
     PATH_COLOR = config["settings"]["PATH_COLOR"]
-    # Maximum energy level
+    # Maximum energy level.
     EMAX = float(config["settings"]["EMAX"])
-    # Minimum energy level
+    # Minimum energy level.
     EMIN = float(config["settings"]["EMIN"])
-    # Step size for basin analysis
+    # Step size for basin analysis.
     STEP = float(config["settings"]["STEP"])
-    # Colormap name
+    # Matplotlib colormap name.
     CMAP = config["settings"]["CMAP"]
-    # Output file name
+    # File name to save the disconnectivity graph.
     OUT = config["settings"]["OUT"]
     main()
