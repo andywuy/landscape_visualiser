@@ -8,56 +8,63 @@ import os
 import configparser
 import matplotlib.pyplot as plt
 
-# plt.rcParams["font.family"] = "Times New Roman"
 plt.rcParams["font.size"] = 24
 plt.rcParams["figure.autolayout"] = True
 
 
 def test_gen_tree():
-    path_tinfo = "tests/testdata/tinfo"
-    path_min_data = "tests/testdata/min.data"
-    path_ts_data = "tests/testdata/ts.data"
+    """
+    Test if the disconnectivity graph is generated correctly by checking the 
+    number of nodes in the graph.
+    """
 
-    # Create the database
+    # Define the paths to the test data files.
+    dir_testdata = "tests/testdata"
+    path_tinfo = os.path.join(dir_testdata, "tinfo")
+    path_min_data = os.path.join(dir_testdata, "min.data")
+    path_ts_data = os.path.join(dir_testdata, "ts.data")
+
+    # Create the database.
     string = create_connect_string()
     print("connection string to the database is: ", string)
     db = Database(string)
-    converter = Converter(db, mindata=path_min_data, tsdata=path_ts_data)
 
-    # Read in data from min.data ts.data
+    # Read in data from min.data and ts.data.
+    converter = Converter(db, mindata=path_min_data, tsdata=path_ts_data)
     converter.convert_no_coords()
 
+    # Read in the configurations from tinfo.
     config = configparser.ConfigParser()
     config.read(path_tinfo)
     # Minimum value of the colorbar.
     CMIN = float(config["settings"]["CMIN"])
     # Maximum value of the colorbar.
     CMAX = float(config["settings"]["CMAX"])
-    # Path to the color values
+    # Path to the color values of the minimum.
     PATH_COLOR = config["settings"]["PATH_COLOR"]
-    PATH_COLOR = os.path.join("tests/testdata/", PATH_COLOR)
-    # Maximum energy level
+    PATH_COLOR = os.path.join(dir_testdata, PATH_COLOR)
+    # Maximum energy level.
     EMAX = float(config["settings"]["EMAX"])
-    # Minimum energy level
+    # Minimum energy level.
     EMIN = float(config["settings"]["EMIN"])
-    # Step size for basin analysis
+    # Step size for basin analysis.
     STEP = float(config["settings"]["STEP"])
-    # Colormap name
+    # Colormap name.
     CMAP = config["settings"]["CMAP"]
-    # Output file name
+    # File name for saving the disconnectivity graph.
     OUT = config["settings"]["OUT"]
 
     # Define the colorbar range.
-    # color_range will be normalised to [0,1] by cm.ScalarMappable
+    # color_range will be scaled to [0,1] by cm.ScalarMappable.
     color_range = [CMIN, CMAX]
 
-    # Read in color values of the minima
+    # Read in color values of the minima.
     values = np.genfromtxt(PATH_COLOR)
 
-    # Transform the values
+    # Scale the values according to colorbar range.
     values = values / (CMAX - CMIN) - (CMIN / (CMAX - CMIN) - 0)
 
-    # Manually set the energy levels. Must be ascending list of floats
+    # Set the energy levels. Must be ascending list of floats.
     elevels = list(np.arange(EMIN, EMAX + STEP, STEP, dtype=float))
 
     # Create the disconnectivity graph
@@ -68,6 +75,17 @@ def test_gen_tree():
 
     # Color the minima
     def minimum_to_value(mini):
+        """
+        Auxilary function used by dg.color_by_value.
+        
+        Parameter
+        ---------
+        mini : Minimum
+
+        Return
+        ------
+        color of the minimum : float
+        """
         # The index of mini starts from 1, but values index starts from 0.
         return float(values[int(mini.id()) - 1])
 
@@ -75,7 +93,7 @@ def test_gen_tree():
         minimum_to_value, colormap=cm.get_cmap(CMAP), normalize_values=False
     )
 
-    # Create matplotlib graph
+    # Draw the disconnectivity graph.
     dg.plot(linewidth=3)
     fig = plt.gcf()
     fig.set_size_inches(5, 5)
@@ -84,7 +102,10 @@ def test_gen_tree():
     fig.colorbar(
         mappable=mappable, shrink=0.3, ticks=[CMIN, 0, CMAX], pad=0.01
     )
-    fig.savefig(OUT)
+    # fig.savefig(OUT)
+
+    # Check if the graph has the right number of nodes as expected.
     assert dg.graph.number_of_nodes() == 10
+
     # Must close the database connection at the end.
     db.close()
