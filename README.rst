@@ -28,17 +28,10 @@ Use the ``gen_tree.py`` script to create a pdf of the landscape:
 1. Put ``diff.map``, ``min.data`` and ``ts.data`` into the ``data\`` folder.     
 2. Create ``tinfo`` which is the configuration file for the script in the ``data\`` folder.
 3. ``docker-compose run viewland bash``
-4.  Do the following steps:
-
-    .. code-block:: text
-
-    export PYTHONPATH=/code/
-
-    cd /user_data/
-
-    python /code/scripts/gen_tree.py
-
-5. ``tree.pdf`` which displays the disconnectivity graph of the landscape will be created.
+4. ``export PYTHONPATH=/code/``
+5. ``cd /user_data/``
+6. ``python /code/scripts/gen_tree.py``
+7. ``tree.pdf`` which displays the disconnectivity graph of the landscape will be created.
 
 
 

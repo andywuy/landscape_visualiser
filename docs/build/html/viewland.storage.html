@@ -96,8 +96,22 @@ database.</p>
 
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">viewland.storage</span> <span class="kn">import</span> <span class="n">Database</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">db</span> <span class="o">=</span> <span class="n">Database</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># TODO: show how to add minima and TS to the database</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">viewland.storage.database</span> <span class="kn">import</span> <span class="n">create_connect_string</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">viewland.utils</span> <span class="kn">import</span> <span class="n">Converter</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create the database.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">string</span> <span class="o">=</span> <span class="n">create_connect_string</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;connection string to the database is: &quot;</span><span class="p">,</span> <span class="n">string</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">db</span> <span class="o">=</span> <span class="n">Database</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Read in data from min.data and ts.data.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">converter</span> <span class="o">=</span> <span class="n">Converter</span><span class="p">(</span><span class="n">db</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">converter</span><span class="o">.</span><span class="n">convert_no_coords</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Show the energy of minima in the database.</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">minimum</span> <span class="ow">in</span> <span class="n">database</span><span class="o">.</span><span class="n">minima</span><span class="p">():</span>
 <span class="gp">&gt;&gt;&gt; </span>    <span class="nb">print</span> <span class="n">minimum</span><span class="o">.</span><span class="n">energy</span>
 </pre></div>

@@ -69,12 +69,16 @@ docker-compose run viewland bash
 </section>
 <section id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>export PYTHONPATH=/code/
-cd /user_data/
-python /code/scripts/gen_tree.py
-</pre></div>
-</div>
-<p>The tree.pdf which displays the disconnectivity graph of the landscape will be created.</p>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">gen_tree.py</span></code> script to create a pdf of the landscape:</p>
+<ol class="arabic simple">
+<li><p>Put <code class="docutils literal notranslate"><span class="pre">diff.map</span></code>, <code class="docutils literal notranslate"><span class="pre">min.data</span></code> and <code class="docutils literal notranslate"><span class="pre">ts.data</span></code> into the <code class="docutils literal notranslate"><span class="pre">data\</span></code> folder.</p></li>
+<li><p>Create <code class="docutils literal notranslate"><span class="pre">tinfo</span></code> which is the configuration file for the script in the <code class="docutils literal notranslate"><span class="pre">data\</span></code> folder.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">docker-compose</span> <span class="pre">run</span> <span class="pre">viewland</span> <span class="pre">bash</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">PYTHONPATH=/code/</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">/user_data/</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">/code/scripts/gen_tree.py</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tree.pdf</span></code> which displays the disconnectivity graph of the landscape will be created.</p></li>
+</ol>
 </section>
 </section>
 

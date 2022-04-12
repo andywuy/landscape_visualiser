@@ -3,7 +3,7 @@
 import numpy as np
 
 from sqlalchemy import create_engine, and_, or_
-from sqlalchemy.orm import Session  # sessionmaker
+from sqlalchemy.orm import Session
 from sqlalchemy import Column, Integer, Float, PickleType
 
 from sqlalchemy import ForeignKey
@@ -24,6 +24,10 @@ def create_connect_string(
     port: str = None,
     host: str = None,
 ):
+    """
+    Create sqlalchemy connection string to the postgresql database using 
+    either user inputs or environment variables.
+    """
     if not all([user, password, database_name, port, host]):
         print(
             "Incomplete information provided. "
@@ -113,12 +117,12 @@ class Minimum(Base):
             return self.id() == m
 
     def __hash__(self):
-        _id = self.id()
-        assert _id is not None
-        return _id
+        id = self.id()
+        assert id is not None
+        return id
 
     def __repr__(self):
-        return "<Minimum(id='{}', energy='{}'>".format(self._id, self.energy)
+        return "<Minimum(id='{}', energy='{}')>".format(self._id, self.energy)
 
 
 class TransitionState(Base):
@@ -234,7 +238,7 @@ class TransitionState(Base):
         return self._id
 
     def __repr__(self):
-        return "<TransitionState(id='{}', energy='{}'>".format(
+        return "<TransitionState(id='{}', energy='{}')>".format(
             self._id, self.energy
         )
 
@@ -259,8 +263,19 @@ class Database(object):
     Examples
     --------
     >>> from viewland.storage import Database
-    >>> db = Database()
-    >>> # TODO: show how to add minima and TS to the database
+    >>> from viewland.storage.database import create_connect_string
+    >>> from viewland.utils import Converter
+
+    >>> # Create the database.
+    >>> string = create_connect_string()
+    >>> print("connection string to the database is: ", string)
+    >>> db = Database(string)
+
+    >>> # Read in data from min.data and ts.data.
+    >>> converter = Converter(db)
+    >>> converter.convert_no_coords()
+    
+    >>> # Show the energy of minima in the database.
     >>> for minimum in database.minima():
     >>>     print minimum.energy
 
@@ -276,17 +291,20 @@ class Database(object):
     def __init__(
         self, connect_string, createdb=True,
     ):
+        # createdb is not used right now.
 
+        # Drop all tables in the database and then create tables for Minimum
+        # and TransitionState.
         self.engine = create_engine(connect_string)
         Base.metadata.drop_all(self.engine)
         Base.metadata.create_all(self.engine)
 
-        # set up the session which will manage the frontend connection
-        # to the database
+        # Set up the session which will manage the frontend connection
+        # to the database.
         self.session = Session(bind=self.engine)
 
     def close(self):
-        '''Close the connection to the database.'''
+        """Close the connection to the database."""
         self.session.commit()
         self.session.close()
 
@@ -333,7 +351,8 @@ class Database(object):
         return None
 
     def get_transition_states_connected_to_minimum(self, min1: Minimum):
-        """Return all transition states connected to a minimum.
+        """
+        Return all transition states connected to a minimum.
 
         Returns
         -------
@@ -349,7 +368,8 @@ class Database(object):
         return candidates.all()
 
     def minima(self, order_energy=True):
-        """Return an iterator over all minima in database.
+        """
+        Return an iterator over all minima in database.
 
         Parameters
         ----------
@@ -366,7 +386,8 @@ class Database(object):
             return self.session.query(Minimum).all()
 
     def transition_states(self, order_energy=False):
-        """Return an iterator over all transition states in database.
+        """
+        Return an iterator over all transition states in database.
 
         Parameters
         ----------
