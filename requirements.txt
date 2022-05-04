@@ -1,5 +1,6 @@
 sqlalchemy>=1.3,<2.0
 psycopg2>=2.8
+Django>=2.2,<3.0
 numpy
 networkx
 ipython

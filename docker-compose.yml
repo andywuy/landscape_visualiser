@@ -1,7 +1,9 @@
 services:
-  database:
+  db:
     image: postgres
     container_name: postgres_container
+    volumes:
+      - ./database/db:/var/lib/postgresql/data
     ports:
       - 5001:5432
     environment:
@@ -9,12 +11,15 @@ services:
       - POSTGRES_PASSWORD=password 
       - POSTGRES_DB=dbname
 
-  viewland:
-    image: viewland
-    container_name: viewland_container
+  web:
+    image: web_image
+    container_name: web_container
     build: .
+    command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - ./data:/user_data
+      - .:/code
+    ports:
+      - 8000:8000
     environment:
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=password 
@@ -22,6 +27,6 @@ services:
       - POSTGRES_HOST=postgres_container
       - POSTGRES_PORT=5432
     depends_on:
-      - database
+      - db
 
       
