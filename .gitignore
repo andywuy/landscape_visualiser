@@ -129,8 +129,10 @@ dmypy.json
 .pyre/
 
 # Custom files
-tree.pdf
+out.png
+*.pdf
 **/database/
+**/data/
 
 # Exclude the docs folder
 !docs/*
