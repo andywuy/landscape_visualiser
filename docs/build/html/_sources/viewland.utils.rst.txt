@@ -20,6 +20,14 @@ viewland.utils.disconnectivity\_graph module
    :undoc-members:
    :show-inheritance:
 
+viewland.utils.wrapper module
+-----------------------------
+
+.. automodule:: viewland.utils.wrapper
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 

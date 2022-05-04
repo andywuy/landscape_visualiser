@@ -18,20 +18,11 @@ Install from Github
 
     git clone https://github.com/andywuy/landscape_visualiser
     cd landscape_visualiser
-    docker-compose up -d
-    docker-compose run viewland bash
 
-Examples
---------
-Use the ``gen_tree.py`` script to create a pdf of the landscape:
 
-1. Put ``diff.map``, ``min.data`` and ``ts.data`` into the ``data\`` folder.     
-2. Create ``tinfo`` which is the configuration file for the script in the ``data\`` folder.
-3. ``docker-compose run viewland bash``
-4. ``export PYTHONPATH=/code/``
-5. ``cd /user_data/``
-6. ``python /code/scripts/gen_tree.py``
-7. ``tree.pdf`` which displays the disconnectivity graph of the landscape will be created.
-
+Example of using the web interface
+----------------------------------
+1. Use Docker: ``docker-compose up``.
+2. Open the webpage in the browser, upload min.data, ts.data, colour, config, and then click display.
 
 
